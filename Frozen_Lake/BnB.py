@@ -1,10 +1,10 @@
 import gymnasium as gym
-
+import time
 n = 4
 env = gym.make('FrozenLake-v1', desc=None, map_name=f"{n}x{n}", is_slippery=False, render_mode="human")
 
 state, info = env.reset()
-print("Starting State:", state)
+# print("Starting State:", state)
 
 GOAL = n * n - 1
 ACTION_SPACE = [0, 1, 2, 3]
@@ -15,7 +15,7 @@ best_path = None
 
 def branch_and_bound():
     global best_depth, best_path
-    
+    # start = time.time()
     while True:
         state, _ = env.reset()
         stack = [(state, 0, [])]
@@ -50,11 +50,13 @@ def branch_and_bound():
                 env.unwrapped.s = curr_state
 
         if not updated:
+            # end = time.time()
+            # print("grgs",end - start)
             break
 
-branch_and_bound()
+# branch_and_bound()
 
-if best_path:
-    print("Final Best Path:", [ACTION_NAMES[a] for a in best_path], "with Cost:", best_depth)
-else:
-    print("No Path Found!")
+# if best_path:
+#     print("Final Best Path:", [ACTION_NAMES[a] for a in best_path], "with Cost:", best_depth)
+# else:
+#     print("No Path Found!")
