@@ -1,7 +1,9 @@
 import gymnasium as gym
 import time
-n = 4
-env = gym.make('FrozenLake-v1', desc=None, map_name=f"{n}x{n}", is_slippery=False, render_mode="human")
+from gymnasium.envs.toy_text.frozen_lake import generate_random_map
+
+n = 16
+env = gym.make('FrozenLake-v1', desc=generate_random_map(size=n), is_slippery=False)
 
 state, info = env.reset()
 # print("Starting State:", state)
@@ -10,12 +12,18 @@ GOAL = n * n - 1
 ACTION_SPACE = [0, 1, 2, 3]
 ACTION_NAMES = {0: "Left", 1: "Down", 2: "Right", 3: "Up"}
 
-best_depth = float('inf')
+best_depth = float('inf')   
 best_path = None
 
+
+def heuristic(pos):
+    x1,y1 = pos//4, pos%4
+    x2,y2 = GOAL//4, GOAL%4
+    return abs(x1-x2) + abs(y1-y2)
+
 def branch_and_bound():
-    global best_depth, best_path
     # start = time.time()
+    global best_depth, best_path
     while True:
         state, _ = env.reset()
         stack = [(state, 0, [])]
@@ -43,15 +51,17 @@ def branch_and_bound():
                 if done and next_state != GOAL:
                     env.unwrapped.s = curr_state
                     continue
-
+                
                 if next_state not in visited:
-                    stack.append((next_state, cost + 1, path + [action]))
+                    if cost + 1 + heuristic(next_state) < best_depth:
+                        stack.append((next_state, cost + 1, path + [action]))
 
                 env.unwrapped.s = curr_state
 
         if not updated:
             # end = time.time()
             # print("grgs",end - start)
+            print("Final Best Path:", [ACTION_NAMES[a] for a in best_path], "with Cost:", best_depth)
             break
 
 # branch_and_bound()
