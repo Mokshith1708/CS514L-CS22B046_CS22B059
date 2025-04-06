@@ -23,6 +23,7 @@ def run_ida_star_with_timing(runs=5, timeout=600):  # τ = 10 min (600 sec)
     plt.xlabel("Run Number")
     plt.ylabel("Time Taken (seconds)")
     plt.title("IDA* Execution Time per Run")
+    plt.savefig("ida_star_execution_time.png")
     plt.show()
 
 # Run the wrapper function
