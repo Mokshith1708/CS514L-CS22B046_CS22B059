@@ -34,7 +34,7 @@ def hill_climbing_once(env, node_list, time_limit=5):
             history.append(current[:]) 
 
     total_time = time.time() - start_time
-    print(f"Finished in {total_time:.2f} seconds. Best Distance: {best_distance:.2f}")
+    print(f"Finished in {total_time:.6f} seconds. Best Distance: {best_distance:.2f}")
     return current, best_distance, total_time
 
 def animate_tour(node_list, tour_history):

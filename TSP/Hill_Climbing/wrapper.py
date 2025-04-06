@@ -33,11 +33,17 @@ def run_multiple_hill_climbing(num_runs=5, tau=600, num_nodes=10):
     avg_time = sum(run_times) / num_runs
     avg_dist = sum(run_distances) / num_runs
 
-    print(f"\nAverage Time: {avg_time:.2f}s")
-    print(f"Average Distance: {avg_dist:.2f}")
+    print(f"\nAverage Time: {avg_time:.6f}s")
+    print(f"Average Distance: {avg_dist:.6f}")
     
     plt.figure(figsize=(8, 5))
-    plt.bar(range(1, num_runs + 1), run_times, color='skyblue', edgecolor='black')
+    bars = plt.bar(range(1, num_runs + 1), run_times, color='skyblue', edgecolor='black')
+
+    for bar, time_val in zip(bars, run_times):
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2.0, height + 0.01, f"{time_val:.6f}s", 
+                 ha='center', va='bottom', fontsize=8, rotation=45)
+
     plt.axhline(y=tau, color='gray', linestyle='--', label=f'Time Limit (τ = {tau}s)')
     plt.xlabel("Run Number")
     plt.ylabel("Time Taken (s)")
@@ -47,6 +53,7 @@ def run_multiple_hill_climbing(num_runs=5, tau=600, num_nodes=10):
     plt.savefig("hill_climbing_time_plot.png")
     print("Plot saved as 'hill_climbing_time_plot.png'")
     plt.show()
+
 
     if best_history is not None:
         animate_tour(best_node_list, best_history)
