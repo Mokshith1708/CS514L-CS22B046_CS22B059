@@ -19,6 +19,7 @@ def run_bnb_with_timing(runs=5, timeout=600):  # τ = 10 min (600 sec)
     plt.xlabel("Run Number")
     plt.ylabel("Time Taken (seconds)")
     plt.title("BnB Execution Time per Run")
+    plt.savefig("BnB_execution_time.png")
     plt.show()
 
 run_bnb_with_timing()
