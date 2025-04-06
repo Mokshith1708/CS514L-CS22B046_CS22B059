@@ -35,28 +35,26 @@ def run_multiple_hill_climbing(num_runs=5, tau=600, num_nodes=10):
 
     print(f"\nAverage Time: {avg_time:.6f}s")
     print(f"Average Distance: {avg_dist:.6f}")
-    
+
+    # Plotting the line graph similar to the uploaded image
     plt.figure(figsize=(8, 5))
-    bars = plt.bar(range(1, num_runs + 1), run_times, color='skyblue', edgecolor='black')
+    x = list(range(1, num_runs + 1))
+    plt.plot(x, run_times, marker='o', color='blue', linestyle='-', label='Run Time')
+    plt.axhline(y=avg_time, color='red', linestyle='--', label=f'Avg = {avg_time:.5f}s')
 
-    for bar, time_val in zip(bars, run_times):
-        height = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width()/2.0, height + 0.01, f"{time_val:.6f}s", 
-                 ha='center', va='bottom', fontsize=8, rotation=45)
-
-    plt.axhline(y=tau, color='gray', linestyle='--', label=f'Time Limit (τ = {tau}s)')
     plt.xlabel("Run Number")
-    plt.ylabel("Time Taken (s)")
-    plt.title("Hill Climbing – Time Taken Per Run")
+    plt.ylabel("Time Taken (seconds)")
+    plt.title("Hill Climbing Execution Time per Run")
     plt.legend()
     plt.tight_layout()
-    plt.savefig("hill_climbing_time_plot.png")
-    print("Plot saved as 'hill_climbing_time_plot.png'")
+    plt.savefig("hill_climbing_time_line_plot.png")
+    print("Plot saved as 'hill_climbing_time_line_plot.png'")
     plt.show()
+
 
 
     if best_history is not None:
         animate_tour(best_node_list, best_history)
 
 if __name__ == "__main__":
-    run_multiple_hill_climbing(num_runs=5, tau=30, num_nodes=30)
+    run_multiple_hill_climbing(num_runs=5, tau=30, num_nodes=10)

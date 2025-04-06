@@ -12,7 +12,7 @@ def run_sa_multiple_times(runs=5, tau=600):
     best_history = None
     best_node_list = None
 
-    env = VRPEnv(num_nodes=15, batch_size=1, num_draw=1)
+    env = VRPEnv(num_nodes=10, batch_size=1, num_draw=1)
     graph = env.reset()
     node_list = np.array(graph[0])
 
@@ -55,7 +55,6 @@ def run_sa_multiple_times(runs=5, tau=600):
         plt.ylabel("Time Taken (s)")
         plt.title("Simulated Annealing – Time Taken per Run")
         plt.legend()
-        plt.grid(True)
         plt.tight_layout()
         plt.savefig("sa_average_time_plot.png")
         print("Plot saved as 'sa_average_time_plot.png'")
