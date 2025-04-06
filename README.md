@@ -38,9 +38,9 @@ url: https://github.com/kevin-schumann/VRP-GYM
 
 ### 4. Steps to setup the environment:
 ``` bash
-    cd TSP
-    git clone https://github.com/kevin-schumann/VRP-GYM.git
-    cd VRP-GYM
+cd TSP
+git clone https://github.com/kevin-schumann/VRP-GYM.git
+cd VRP-GYM
 ```
    - Now open the VRP-GYM/setup.py file.
    - Find this line (or similar):
@@ -51,7 +51,7 @@ url: https://github.com/kevin-schumann/VRP-GYM
    - now run this command:
 
 ``` bash
-      pip install -e .
+pip install -e .
 ```
 
 ### 3. To Run Hill Climbing (steepest ascent) algorithm:
