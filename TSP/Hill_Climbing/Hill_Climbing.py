@@ -14,28 +14,39 @@ def total_distance(tour, node_list):
 
 history = []
 
-def hill_climbing_once(env, node_list, time_limit=5):
+def hill_climbing_steepest(env, node_list, time_limit=5):
     start_time = time.time()
     current = list(range(env.num_nodes))
     np.random.shuffle(current)
     best_distance = total_distance(current, node_list)
-    history.append(current[:]) 
+    history.append(current[:])
 
     while time.time() - start_time < time_limit:
-        a, b = np.random.choice(len(current), 2, replace=False)
-        neighbor = current[:]
-        neighbor[a], neighbor[b] = neighbor[b], neighbor[a]
+        best_neighbor = None
+        best_neighbor_distance = best_distance
 
-        neighbor_distance = total_distance(neighbor, node_list)
+        for i in range(len(current)):
+            for j in range(i + 1, len(current)):
+                neighbor = current[:]
+                neighbor[i], neighbor[j] = neighbor[j], neighbor[i]
+                neighbor_distance = total_distance(neighbor, node_list)
 
-        if neighbor_distance < best_distance:
-            current = neighbor
-            best_distance = neighbor_distance
-            history.append(current[:]) 
+                if neighbor_distance < best_neighbor_distance:
+                    best_neighbor = neighbor
+                    best_neighbor_distance = neighbor_distance
+
+        if best_neighbor is not None:
+            current = best_neighbor
+            best_distance = best_neighbor_distance
+            history.append(current[:])
+        else:
+            break
 
     total_time = time.time() - start_time
     print(f"Finished in {total_time:.6f} seconds. Best Distance: {best_distance:.2f}")
     return current, best_distance, total_time
+
+
 
 def animate_tour(node_list, tour_history):
     fig, ax = plt.subplots()

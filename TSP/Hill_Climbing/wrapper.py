@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from gym_vrp.envs import VRPEnv
-from Hill_Climbing import hill_climbing_once, history, animate_tour
+from Hill_Climbing import hill_climbing_steepest, history, animate_tour
 
 def run_multiple_hill_climbing(num_runs=5, tau=600, num_nodes=10):
     run_times = []
@@ -20,7 +20,7 @@ def run_multiple_hill_climbing(num_runs=5, tau=600, num_nodes=10):
     for i in range(num_runs):
         print(f"Run {i + 1}/{num_runs}")
         history.clear()
-        tour, dist, time_taken = hill_climbing_once(env, node_list, time_limit=tau)
+        tour, dist, time_taken = hill_climbing_steepest(env, node_list, time_limit=tau)
 
         run_times.append(time_taken)
         run_distances.append(dist)
@@ -59,4 +59,4 @@ def run_multiple_hill_climbing(num_runs=5, tau=600, num_nodes=10):
         animate_tour(best_node_list, best_history)
 
 if __name__ == "__main__":
-    run_multiple_hill_climbing(num_runs=5, tau=5, num_nodes=10)
+    run_multiple_hill_climbing(num_runs=5, tau=30, num_nodes=30)
